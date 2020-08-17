@@ -1,3 +1,5 @@
+const randomstring = require('randomstring');
+
 module.exports = {
   async up(db, client) {
     await db.createCollection('customers');
@@ -13,10 +15,7 @@ module.exports = {
           "db_password": "123456",
           "db_port": "27017"
         },
-        "api_keys": {
-          "client_id": "",
-          "client_secret": ""
-        },
+        "client_id": randomstring.generate(10),
         "created_at": new Date(),
         "updated_at": new Date()
       }
@@ -33,10 +32,7 @@ module.exports = {
           "db_password": "123456",
           "db_port": "27017"
         },
-        "api_keys": {
-          "client_id": "",
-          "client_secret": ""
-        },
+        "client_id": randomstring.generate(10),
         "created_at": new Date(),
         "updated_at": new Date()
       }

@@ -1,23 +1,18 @@
 import jwt from 'jsonwebtoken';
-import { createNamespace } from 'continuation-local-storage';
-import { getConnectionBySlug } from '../connectionManager';
-
-let nameSpace = createNamespace('unique context');
+import { getConnectionByClientId } from '../connectionManager';
 
 module.exports = (req, res, next) => {
   const token = req.headers['x-access-token'] || req.body.token || req.query.token;
 
   if (token) {
-    jwt.verify(token, req.app.get('api_secret_key'), (error, decoded) => {
+    jwt.verify(token, req.app.get('client_secret'), (error, decoded) => {
       if (error) {
         res.json({
           message: error
         });
       } else {
-        nameSpace.run(() => {
-          nameSpace.set('connection', getConnectionBySlug(decoded.slug));
-          next();
-        });
+        req.connection = getConnectionByClientId(decoded.client_id);
+        next();
       }
     });
   } else {
