@@ -2,7 +2,7 @@ import "./env";
 import express from "express";
 import bodyParser from "body-parser";
 
-import { connectAllDb } from "./connectionManager";
+import connectionManager from "./connectionManager";
 
 import routes from "./routes/index";
 
@@ -18,23 +18,22 @@ const app = express();
 app.set("port", PORT);
 app.use(bodyParser.json());
 
-app.set("client_secret", process.env.CLIENT_SECRET);
-
-connectAllDb();
+app.set("api_secret_key", process.env.API_SECRET_KEY);
 
 app.get("/", (req, res, next) => {
   res.send("Root Url");
 });
 
 app.post("/token", async (req, res, next) => {
-  let customer = Customer.find({ "client_id": req.body.client_id });
+  let customer = Customer.findOne({ "client_id": req.body.client_id });
   customer.then((data) => {
-    if (data.length > 0) {
-      if (req.body.client_secret === req.app.get("client_secret")) {
+    if (data) {
+      if (req.body.client_secret === data.client_secret) {
         const payload = {
+          id: data.id,
           client_id: req.body.client_id
         };
-        const token = jwt.sign(payload, req.app.get("client_secret"), {
+        const token = jwt.sign(payload, req.app.get("api_secret_key"), {
           expiresIn: 720
         });
         res.json({
@@ -54,7 +53,7 @@ app.post("/token", async (req, res, next) => {
     res.json({
       message: error
     });
-  });  
+  });
 });
 
 app.use("/api", verifyToken);

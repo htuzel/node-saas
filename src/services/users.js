@@ -1,6 +1,5 @@
-import User from '../models/User';
+import User from "../models/User";
 
-export function getAll(connection) {
-  const model = connection.model('user');
-  return model.find({ });
+export function getAll(customer_id) {
+  return User.find({ "customer_id": customer_id });
 }

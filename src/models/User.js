@@ -1,9 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
+var UserSchema = new Schema({  
+  customer_id: Number,
   id: Number,
-  email: String
+  name: String,
+  email: String,
+  created_at: {
+    type: Date,
+    default: Date.now()
+  },
+  updated_at: {
+    type: Date,
+    default: Date.now()
+  }
 });
 
-module.exports = mongoose.model('user', UserSchema);
+module.exports = mongoose.model("user", UserSchema);

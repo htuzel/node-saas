@@ -5,34 +5,24 @@ module.exports = {
     await db.createCollection('customers');
     await db.collection('customers').insertOne(
       {
+        "id": 1,
         "name": "test",
         "email": "test@email.com",
         "password": "123456",
-        "db_infos": {
-          "db_name": "customer1_db",
-          "db_host": "localhost",
-          "db_username": "customer1_user",
-          "db_password": "123456",
-          "db_port": "27017"
-        },
         "client_id": randomstring.generate(10),
+        "client_secret": randomstring.generate(20),
         "created_at": new Date(),
         "updated_at": new Date()
       }
     );
     await db.collection('customers').insertOne(
       {
+        "id": 2,
         "name": "test2",
         "email": "test2@email.com",
         "password": "123456",
-        "db_infos": {
-          "db_name": "customer2_db",
-          "db_host": "localhost",
-          "db_username": "customer2_user",
-          "db_password": "123456",
-          "db_port": "27017"
-        },
         "client_id": randomstring.generate(10),
+        "client_secret": randomstring.generate(20),
         "created_at": new Date(),
         "updated_at": new Date()
       }

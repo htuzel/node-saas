@@ -1,20 +1,21 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
 var CustomerSchema = new Schema({
+  id: Number,
   name: String,
   email: String,
-  password: String,
-  db_infos: {
-    db_name: String,
-    db_host: String,
-    db_username: String,
-    db_password: String,
-    db_port: String
-  },  
+  password: String, 
   client_id: String,
-  created_at: Date,
-  updated_at: Date
+  client_secret: String,
+  created_at: {
+    type: Date,
+    default: Date.now()
+  },
+  updated_at: {
+    type: Date,
+    default: Date.now()
+  }
 });
 
-module.exports = mongoose.model('customer', CustomerSchema);
+module.exports = mongoose.model("customer", CustomerSchema);
