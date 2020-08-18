@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
-var UserSchema = new Schema({  
-  customer_id: Number,
+var CustomerSchema = new Schema({
   id: Number,
   name: String,
   email: String,
+  password: String, 
+  client_id: String,
+  client_secret: String,
   created_at: {
     type: Date,
     default: Date.now()
@@ -16,4 +18,4 @@ var UserSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("user", UserSchema);
+module.exports = mongoose.model("customer", CustomerSchema);

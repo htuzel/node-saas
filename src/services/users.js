@@ -1,8 +1,5 @@
-import { getConnection } from '../connectionManager';
+import User from "../models/User";
 
-import User from '../models/User';
-
-export function getAll() {
-  const model = getConnection().model('user');
-  return model.find({ });
+export function getAll(customer_id) {
+  return User.find({ "customer_id": customer_id });
 }
